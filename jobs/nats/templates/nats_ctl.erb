@@ -1,20 +1,26 @@
 #!/bin/bash
 set -exu
 
+
 JOB_DIR=/var/vcap/jobs/nats
 RUN_DIR=/var/vcap/sys/run/nats
 LOG_DIR=/var/vcap/sys/log/nats
 PIDFILE=$RUN_DIR/nats.pid
 CONFIG_DIR=$JOB_DIR/config
 
+
 source /var/vcap/packages/nats-common/utils.sh
 redirect_logs $LOG_DIR nats_ctl
+
+
 
 case $1 in
 
   start)
     # Allowed number of open file descriptors
     ulimit -n 100000
+
+    echo "hello from the start script" > /tmp/output
 
     pid_guard $PIDFILE "NATS"
 
